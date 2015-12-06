@@ -88,7 +88,7 @@
                   <input type="hidden" value="from" name="meta_required">
                   <input type="hidden" value="0" name="meta_forward_vars">
                   <div class="form-group">
-                    <label>2% DISCOUNT FOR<br>BGS SUBSCRIBERS</label>
+                    <label>1% DISCOUNT FOR<br>BGS SUBSCRIBERS</label>
                   </div>
                   <div class="form-group">
                     <label class="sr-only" for="name">Name</label>
