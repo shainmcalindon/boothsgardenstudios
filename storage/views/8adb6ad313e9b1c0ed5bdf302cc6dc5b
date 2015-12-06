@@ -1,0 +1,30 @@
+
+<?php \Laravel\Section::start('user_content'); ?>
+
+<div class="pull-right">
+  <div class="btn-group">
+    <a class="btn btn-primary" href="/user/categories/create/">Create category</a>
+  </div>
+</div>
+
+<div class="page-header"><h1>Categories</h1></div>
+
+<?php echo  $categories->links() ; ?>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+    </tr>
+  </thead>
+  <?php foreach ($categories->results as $category): ?>
+  <tr>
+    <td><?php echo  HTML::link('user/categories/update/'.$category->id, $category->title) ; ?></td>
+  </tr>
+  <?php endforeach; ?>
+</table>
+
+<?php echo  $categories->links() ; ?>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('templates.user')->with(get_defined_vars())->render(); ?>

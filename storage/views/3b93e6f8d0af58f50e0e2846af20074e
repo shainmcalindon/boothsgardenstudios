@@ -1,0 +1,13 @@
+
+<?php \Laravel\Section::start('user_content'); ?>
+
+<div class="pull-right"><a class="btn btn-default" href="/user/posts/">Back to case studies</a></div>
+
+<div class="page-header"><h1>Create New Case Study</h1></div>
+
+<?php echo view('widgets.errors')->with(get_defined_vars())->render(); ?>
+
+<?php echo view('user.posts._form')->with(get_defined_vars())->render(); ?>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('templates.user')->with(get_defined_vars())->render(); ?>

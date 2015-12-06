@@ -1,0 +1,35 @@
+
+<?php \Laravel\Section::start('user_content'); ?>
+
+<div class="pull-right">
+  <div class="btn-group">
+    <a class="btn btn-primary" href="/user/faqcategories/create/">Create category</a>
+  </div>
+</div>
+
+<div class="page-header"><h1>Faq Categories</h1></div>
+
+<form method="post" role="form">
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Sort Order</th>
+      <th>Org</th>
+    </tr>
+  </thead>
+  <?php foreach ($faqcategories as $faqcategory): ?>
+  <tr>
+    <td><?php echo  HTML::link('user/faqcategories/update/'.$faqcategory->id, $faqcategory->title) ; ?></td>
+    <td><input name="sort_order[<?php echo HTML::entities( $faqcategory->id ); ?>]" id="sort_order[<?php echo HTML::entities( $faqcategory->id ); ?>]" class="form-control" value="<?php echo HTML::entities( $faqcategory->sort_order ); ?>"></td>
+    <td><?php if (count($faqcategory->organisations) > 1) { ?>Both<?php } else foreach ($faqcategory->organisations as $org) { ?><?php echo  $org->short_name ; ?><?php } ?></td>
+  </tr>
+  <?php endforeach; ?>
+</table>
+<div class="form-group">
+  <button type="submit" class="btn btn-info">Update Sort Order</button>
+</div>
+</form>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('templates.user')->with(get_defined_vars())->render(); ?>

@@ -1,0 +1,384 @@
+
+<?php \Laravel\Section::start('css'); ?>
+<link href="/css/jquery.toast.css" rel="stylesheet" />
+<style type="text/css">
+.qt { cursor:pointer; }
+.qt td { }
+.qt .q-floor { text-align:center; width:60px; height:60px; }
+.qt .q-innerwall-vertical,
+.qt .q-innerwall-vertical { width:10px; }
+.qt .q-innerwall-horizontal { height:10px; }
+.qt .q-wall-join { height:10px; width:10px; }
+.qt .q-outerwall-top td,
+.qt .q-outerwall-bottom td { height:10px; }
+.qt tr .q-outerwall:first-child,
+.qt tr .q-outerwall:last-child { width:10px; }
+.qt .hovering { opacity:0.5; }
+
+.qt .q-wall-join { background-color:#fff; }
+
+.qt .q-floor { background-color:#9f9; }
+.qt .q-innerwall { background-color:#99f; }
+.qt .q-outerwall { background-color:#f99; }
+
+.help-legend-floor { background-color:#9f9; }
+.help-legend-innerwall { background-color:#99f; }
+.help-legend-outerwall { background-color:#f99; }
+
+/*
+.qt tr:first-child td { border-top:2px dashed #000; }
+.qt tr:last-child td { border-bottom:2px dashed #000; }
+.qt tr td:first-child { border-left:2px dashed #000; }
+.qt tr td:last-child { border-right:2px dashed #000; }
+#options span { color:#aaa; }
+#ignore .qt .hovering { border:1px solid #f00; }
+.mouse-left { border-left:5px solid #0f0 !important; }
+.mouse-right { border-right:5px solid #0f0 !important; }
+.mouse-top { border-top:5px solid #0f0 !important; }
+.mouse-bottom { border-bottom:5px solid #0f0 !important }
+*/
+</style>
+<?php \Laravel\Section::stop(); ?>
+
+<?php \Laravel\Section::start('js'); ?>
+<script type="text/javascript" src="/js/jquery.toast.js"></script>
+<?php \Laravel\Section::stop(); ?>
+
+<?php \Laravel\Section::start('content'); ?>
+
+<h1><?php echo HTML::entities( $data->title ); ?></h1>
+
+<div id="quote-help" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="quote-help-label" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 id="quote-help-label">Help</h4>
+			</div>
+			<div class="modal-body">
+				<h4>Creating your quotation</h4>
+				<ol>
+					<li>Click a box to view the options available for that space.</li>
+					<li>In the popup that appears, select the options that you would like to apply to that space.</li>
+					<li>Close the popup after you've made your selections - your choices are added automatically.</li>
+					<li>When you've finished your selections, click the &quot;<strong>Save</strong>&quot; button to save and generate your quote.</li>
+				</ol>
+				<hr />
+				<h4>Colour Coding</h4>
+				<p><span class="label help-legend-innerwall">Internal walls</span></</p>
+				<p><span class="label help-legend-outerwall">External walls</span></p>
+				<p><span class="label help-legend-floor">Floor area</span></p>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="options-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="options-modal-label" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 id="options-modal-label">Options</h4>
+			</div>
+			<div class="modal-body">
+				
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
+				<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Save</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+$('#options-modal').modal({
+	show: false
+});
+</script>
+
+<div class="row">
+	<div class="col-md-8">
+		<div id="plan"></div>
+		<div id="plan-options"></div>
+	</div>
+	<div class="col-md-4">
+		<p><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#quote-help">Help <span class="glyphicon glyphicon-question-sign"></span></button></p>
+		<h2>Available Options</h2>
+		<form id="options" onsubmit="return false;">
+			<ul class="nav nav-tabs">
+				<?php $i = 0; foreach ($data->options as $group_name => $group_options) : $i++; ?>
+				<li <?php if ($i == 1) : ?>class="active"<?php endif; ?> title="<?php echo e($group_name); ?>"><a href="#options-<?php echo $i; ?>" data-toggle="tab"><?php echo e(current(explode(" ", $group_name))); ?></a></li>
+				<?php endforeach; ?>
+			</ul>
+			<div class="tab-content">
+				<?php $i = 0; foreach ($data->options as $group_name => $group_options) : $i++; ?>
+				<div class="tab-pane <?php if ($i == 1) : ?>active<?php endif; ?>" id="options-<?php echo $i; ?>">
+					<?php foreach ($group_options as $group_option) : ?>
+						<div class="radio">
+							<label>
+								<input type="radio" name="option" data-oos="<?php echo HTML::entities( json_encode($group_option->to_array()) ); ?>" /> <?php echo HTML::entities( $group_option->name ); ?> <span class="pull-right">&pound;<?php echo HTML::entities( $group_option->price ); ?></span>
+							</label>
+						</div>
+					<?php endforeach; ?>
+				</div>
+				<?php endforeach; ?>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script>
+$(function() {
+	<?php /* var p = <?php echo  $data->plan ; ?>; */ ?>
+	var t = $('<table />').addClass('qt').appendTo('#plan');
+	var dimensions = { rows:<?php echo  $data->rows ; ?>, cols:<?php echo  $data->cols ; ?> };
+	var plan_options = <?php echo  $data->plan_options ; ?>;
+	$('<p class="text-center">FRONT</p>').insertAfter(t);
+	
+	// add rows
+	for (var i = 0; i <= dimensions.rows; i++) $('<tr class="q-row" />').appendTo(t);
+	// add cells
+	t.find('tr').each(function() {
+		for (var i = 0; i <= dimensions.cols; i++) $('<td class="q-floor" />').appendTo(this);
+		$(this).find('td').not(':last').after('<td class="q-innerwall q-innerwall-vertical" />');
+	});
+	// add divider rows
+	t.find('tr').not(':last').after('<tr class="q-row-divider" />');
+	// add divider cells
+	t.find('.q-row-divider').each(function() {
+		for (var i = 0; i <= dimensions.cols; i++) $('<td class="q-innerwall q-innerwall-horizontal" />').appendTo(this);
+		$(this).find('td').not(':last').after('<td class="q-wall-join" />');
+	});
+	// add outer walls
+	$('<tr />').insertBefore(t.find('tr:first')).clone().insertAfter(t.find('tr:last'));
+	t.find('tr:first').addClass('q-outerwall-top');
+	t.find('tr:last').addClass('q-outerwall-bottom');
+	t.find('tr:first, tr:last').each(function() {
+		for (var i = 0; i <= dimensions.cols; i++) $('<td class="q-outerwall" />').appendTo(this);
+		var td = $('<td class="q-outerwall q-wall-join" />');
+		$(this).find('td').not(':last').each(function() {
+			td.clone().insertAfter(this);
+		});
+	});
+	t.find('tr').each(function() {
+		$('<td class="q-outerwall" />').appendTo(this).clone().prependTo(this);
+		if ($(this).hasClass('q-row-divider')) $(this).find('.q-outerwall').addClass('q-wall-join');
+	});
+	
+	
+	/* ============================================================================================================== */
+	
+	
+	// the selected radio option
+	var selected = null;
+	$('#options :radio').on('click change', function() {
+		selected = $(this).data('oos');
+	});
+	$('#options :radio:first').click(); // set up the selected option
+		
+	function addItem(element, item) {
+		var data = $(element).data('plan_options');
+		data.push(item);
+		$(element).data('plan_options', data);
+		$.toast("Added " + item.item.name.toLowerCase(), { type:'success' });
+		$(element).popover('show');
+	}
+	
+	function showOptions(td)
+	{
+		console.log("Showing options for td: ", td);
+		
+		var find = false;
+		if (td.hasClass('q-outerwall')) find = 'outer_wall';
+		if (td.hasClass('q-innerwall')) find = 'inner_wall';
+		
+		console.log('find = ', find);
+		
+		// get the options for the td
+		var opts = $.map(plan_options, function(v, k) {
+			if (find) {
+				if (find == 'outer_wall'  &&  v.outer_wall == "1") return v;
+				else if (find == 'inner_wall'  &&  v.inner_wall == "1") return v;
+				else return;
+			}
+			else {
+				if (v.outer_wall == "0"  &&  v.inner_wall == "0") return v;
+				return;
+			}
+		});
+		console.log("Valid options: ", opts);
+		
+		// format and display
+		var m = $('#options-modal');
+		var b = m.find('.modal-body').css({
+			'max-height': '200px',
+			'overflow': 'auto'
+		});
+		do {
+			if (!opts.length) {
+				b.html('<p>No options were found for this section</p>');
+				break;
+			}
+			$.each(opts, function(k, v) {
+				var f = $('<div class="form-action clearfix" />');
+				$('<label class="col-xs-10" />').text(v.name).appendTo(f);
+				$('<input type="text" class="form-control input-sm" placeholder="Qty" />').data('oos', v).prependTo(f).wrap('<div class="col-xs-2" />');
+				f.appendTo(b);
+			});
+		}
+		while (false);
+		m.modal('show');
+	}
+	
+	// set up the options modal's SAVE button
+	$('#options-modal .modal-footer .btn-primary').click(function(e) {
+		console.log('Save...');
+	});
+	
+	// set up the customisable cells
+	t.find('.q-outerwall, .q-innerwall').not('.q-wall-join').each(function() {
+		$(this).data('plan_options', []);
+	}).hover(function(e) {
+		$(this).addClass('hovering');
+		
+		// render items into #plan-options
+		var o = $(this).data('plan_options');
+		console.log('current options are ', o);
+		var ul = $('<ul />');
+		$(o).each(function(k,v) {
+			$('<li />').text(v.name).appendTo(ul);
+		});
+		var d = $('#plan-options').empty().append(ul);
+	}, function(e) {
+		$(this).removeClass('hovering');
+		
+		// clear #plan-options
+		var d = $('#plan-options').empty();
+	}).click(function(e) {
+		var td = $(this);
+		console.log(td, selected);
+		var o = td.data('plan_options');
+		var ul = $('#plan-options ul');
+		
+		// check outerwall and outerwall
+		if (td.hasClass('q-outerwall')  &&  selected.outer_wall) {
+			// sss -> remove existing outer wall
+			o.push(selected);
+		}
+		
+		// check innerwall and innerwall
+		else if (td.hasClass('q-innerwall')  &&  selected.inner_wall) {
+			// sss -> remove existing inner wall
+			o.push(selected);
+		}
+		
+		// decking
+		else if (td.hasClass('q-outerwall')  &&  selected.decking) {
+			// sss -> remove existing decking
+			o.push(selected);
+		}
+		
+		// flyover
+		else if (td.hasClass('q-outerwall')  &&  selected.flyover) {
+			// sss -> remove existing flyover
+			o.push(selected);
+		}
+		
+		// additions
+		else if (selected.global) {
+			o.push(selected);
+		}
+		
+		// didn't match :(
+		else {
+			console.log('no match :(');
+			return; // don't do any of the clean up stuff
+		}
+		
+		// save the options back to the TD
+		td.data('plan_options', o);
+		// render to the list
+		$('<li />').text(selected.name).appendTo(ul);
+	});
+	/*.popover({ // show the selected plan_options
+		'container': 'body',
+		'placement': 'bottom',
+		'trigger': 'hover',
+		'html': true,
+		'delay': { 'show': 250, 'hide': 0 },
+		'content': function() {
+			var td = $(this);
+			var h = new Array();
+			var d = td.data('plan_options');
+			for (var i in d) {
+				h.push(d[i].item.name);
+			}
+			return h.join('<br />');
+		}
+	}).click(function(e) {
+		e.preventDefault();
+		var td = $(this);
+		
+		if (td.hasClass('q-wall-join')) return; // nothing allowed on these
+		
+		// show the modal for the selected cell
+		showOptions(td);
+	});
+	*/
+	/*
+	.click(function(e) { // place an option on the plan's block
+		e.preventDefault();
+		var td = $(this);
+		console.log("Processing selected option on td", selected, td);
+		
+		if (td.hasClass('q-wall-join')) return; // nothing allowed on these
+		
+		if (td.hasClass('q-outerwall')  &&  !selected.outer_wall) { $.toast("Unable to add " + selected.name.toLowerCase() + " to an outer wall", { type: 'error' }); return; }
+		if (td.hasClass('q-innerwall')  &&  !selected.inner_wall) { $.toast("Unable to add " + selected.name.toLowerCase() + " to an inner wall", { type: 'error' }); return; }
+		
+		if (td.hasClass('q-floor')  &&  (selected.inner_wall  ||  selected.outer_wall)) { $.toast("Unable to add " + selected.name.toLowerCase() + " to a floor area", { type: 'error' }); return; }
+		
+		addItem(td, {
+			item: selected
+		});
+		console.log('Added item to cell', selected, td);
+		return;
+	});
+	*/
+	
+	function save_plan()
+	{
+		var d = {
+			cols: dimensions.cols,
+			rows: dimensions.rows,
+			items: []
+		};
+		t.find('td').each(function() {
+			var temp = {
+				type: $(this).attr('class').split(' '),
+				options: $(this).data('oos')
+			};
+			d.items.push(temp);
+		});
+		console.log(d);
+	}
+});
+</script>
+
+<?php \Laravel\Section::stop(); ?>
+
+
+
+
+
+
+
+
+
+
+
+
+<?php echo view('templates.main')->with(get_defined_vars())->render(); ?>

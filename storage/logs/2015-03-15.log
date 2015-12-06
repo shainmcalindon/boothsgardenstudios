@@ -1,0 +1,11 @@
+2015-03-15 18:34:01 ERROR - exception 'Exception' with message 'Plan was not found' in /home/boothsga/public_html/application/controllers/quotations.php:140
+Stack trace:
+#0 [internal function]: Quotations_Controller->get_edit('2')
+#1 /home/boothsga/public_html/laravel/routing/controller.php(325): call_user_func_array(Array, Array)
+#2 /home/boothsga/public_html/laravel/routing/controller.php(285): Laravel\Routing\Controller->response('edit', Array)
+#3 /home/boothsga/public_html/laravel/routing/controller.php(165): Laravel\Routing\Controller->execute('edit', Array)
+#4 /home/boothsga/public_html/laravel/routing/route.php(153): Laravel\Routing\Controller::call('quotations@(:1)', Array)
+#5 /home/boothsga/public_html/laravel/routing/route.php(124): Laravel\Routing\Route->response()
+#6 /home/boothsga/public_html/laravel/laravel.php(167): Laravel\Routing\Route->call()
+#7 /home/boothsga/public_html/public/index.php(34): require('/home/boothsga/...')
+#8 {main}

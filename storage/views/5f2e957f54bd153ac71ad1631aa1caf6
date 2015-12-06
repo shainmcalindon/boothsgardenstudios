@@ -1,0 +1,15 @@
+
+<?php \Laravel\Section::start('content'); ?>
+
+<h1><?php echo  $data->title ; ?></h1>
+
+<div class="jumbotron">
+    <div class="container">     
+        <p>The cost of your new studio will be approximately &pound;<?php echo  $data->full_cost ; ?></p>
+        <hr>
+        <p><a class="btn btn-primary btn-lg">Click here to email us or call on 00000 000000</a></p>
+    </div>
+</div>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('templates.main')->with(get_defined_vars())->render(); ?>

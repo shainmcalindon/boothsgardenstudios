@@ -1,0 +1,32 @@
+
+<?php \Laravel\Section::start('user_content'); ?>
+
+<div class="pull-right">
+  <div class="btn-group">
+    <a class="btn btn-primary" href="/user/galleries/create/">Create gallery</a>
+  </div>
+</div>
+
+<div class="page-header"><h1>Galleries</h1></div>
+
+<?php echo  $galleries->links() ; ?>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Visible</th>
+    </tr>
+  </thead>
+  <?php foreach ($galleries->results as $gallery): ?>
+  <tr>
+    <td><?php echo  HTML::link('user/galleries/view/'.$gallery->id, $gallery->title) ; ?></td>
+    <td><?php if ($gallery->visibility == true) { ?><i class="glyphicon glyphicon-ok"></i><?php } else { ?><i class="glyphicon glyphicon-remove"></i><?php } ?></td>
+  </tr>
+  <?php endforeach; ?>
+</table>
+
+<?php echo  $galleries->links() ; ?>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('templates.user')->with(get_defined_vars())->render(); ?>

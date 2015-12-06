@@ -1,0 +1,21 @@
+<form method="post" role="form" class="form-horizontal">
+  <fieldset>
+    <?php foreach ($layout as $l): ?>
+    <div class="form-group">
+      <label class="col-sm-3 control-label"><a href="/user/pricing/view/<?php echo HTML::entities( $l->id ); ?>"><?php echo HTML::entities( $l->size_x ); ?> x <?php echo HTML::entities( $l->size_y ); ?></a></label>
+      <div class="col-sm-9 input-group">
+        <div class="input-group-addon">&pound;</div>
+        <input type="text" id="pricing[<?php echo HTML::entities( $l->id ); ?>]" name="pricing[<?php echo HTML::entities( $l->id ); ?>]" value="<?php echo HTML::entities( Input::old($l->id, $l->cost) ); ?>" class="form-control">
+      </div>
+    </div>
+    <?php endforeach; ?>
+    <div class="-group">
+      <div class="col-sm-offset-3 col-sm-9 form">
+        <button id="save" name="save" class="btn btn-success" type="submit">Save</button>
+        <?php if($layout): ?>
+        <a id="cancel" name="cancel" class="btn btn-default" href="/user/home/">Cancel</a>
+      </div>
+      <?php endif; ?>
+    </div>
+  </fieldset>
+</form>

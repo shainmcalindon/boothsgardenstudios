@@ -1,0 +1,11 @@
+2015-09-19 12:43:06 ERROR - exception 'Exception' with message 'Plan was not found' in C:\wamp\www\boothsgardenstudios.co.uk\application\controllers\quotations.php:144
+Stack trace:
+#0 [internal function]: Quotations_Controller->get_edit()
+#1 C:\wamp\www\boothsgardenstudios.co.uk\laravel\routing\controller.php(325): call_user_func_array(Array, Array)
+#2 C:\wamp\www\boothsgardenstudios.co.uk\laravel\routing\controller.php(285): Laravel\Routing\Controller->response('edit', Array)
+#3 C:\wamp\www\boothsgardenstudios.co.uk\laravel\routing\controller.php(165): Laravel\Routing\Controller->execute('edit', Array)
+#4 C:\wamp\www\boothsgardenstudios.co.uk\laravel\routing\route.php(153): Laravel\Routing\Controller::call('quotations@(:1)', Array)
+#5 C:\wamp\www\boothsgardenstudios.co.uk\laravel\routing\route.php(124): Laravel\Routing\Route->response()
+#6 C:\wamp\www\boothsgardenstudios.co.uk\laravel\laravel.php(167): Laravel\Routing\Route->call()
+#7 C:\wamp\www\boothsgardenstudios.co.uk\public\index.php(34): require('C:\wamp\www\boo...')
+#8 {main}

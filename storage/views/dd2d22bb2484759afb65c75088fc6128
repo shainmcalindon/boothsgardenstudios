@@ -1,0 +1,30 @@
+
+<?php \Laravel\Section::start('content'); ?>
+
+<div class="blog-post clearfix blog-post-content">
+  <div class="pull-right">
+    <a href="/case-studies" class="btn btn-default">Back to Case Studies</a>
+  </div>
+  <div class="page-header"><h1><?php echo HTML::entities( $post->title ); ?></h1></div>
+  <!--<div class="post-meta"><small>Posted on <?php echo  date('d-m-Y H:i:s', strtotime($post->created_at)) ; ?>, by <?php echo  $post->author->nickname ; ?></small></div>-->
+  <div class="post-body">
+    <?php echo  $post->body ; ?>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+$(function() {
+  $('img.img-caption').each(function() {
+    var img = $(this);
+    var text = $(img).attr('alt');
+    var width = $(img).attr('width');
+    var style = $(img).attr('class');
+    if (text == '') return;
+    $(img).wrap('<div class="caption '+style+'" style="width:'+width+'px" />').after('<p class="caption-text">'+text+'</p>');
+  });
+});
+</script>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('templates.main')->with(get_defined_vars())->render(); ?>

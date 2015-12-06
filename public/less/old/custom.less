@@ -1,0 +1,181 @@
+@font-face {
+  font-family: 'texgyreadventorregular';
+  src: url(../fonts/texgyreadventor-regular-webfont.eot);
+  src: url(../fonts/texgyreadventor-regular-webfont.eot?#iefix) format('embedded-opentype'),
+       url(../fonts/texgyreadventor-regular-webfont.woff) format('woff'),
+       url(../fonts/texgyreadventor-regular-webfont.ttf) format('truetype'),
+       url(../fonts/texgyreadventor-regular-webfont.svg#texgyreadventorregular) format('svg');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-transform: uppercase;
+}
+h1 {
+  font-size: 183%;
+}
+h2 {
+  font-size: 150%;
+}
+h3 {
+  font-size: 125%;
+}
+h4 {
+  font-size: 110%;
+}
+
+.form-signin {
+  max-width: 300px;
+  padding: 19px 29px 29px;
+  margin: 0 auto 20px;
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+          box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin input[type="text"],
+.form-signin input[type="password"] {
+  font-size: 16px;
+  height: auto;
+  margin-bottom: 15px;
+  padding: 7px 9px;
+}
+
+table.mceLayout, textarea.tinymce {
+    width: 100% !important;
+}
+
+.navbar-inner {
+    background-color: #e0bd8f;
+    background-image: url(../img/bg-top-nav.jpg);
+    background-repeat: repeat-x;
+    border: none;
+    border-bottom: 1px solid #f9f7f4;
+}
+.navbar-fixed-top .navbar-inner, .navbar-static-top .navbar-inner {
+  .box-shadow(none);
+}
+.brand, .navbar .nav > li > a {
+  text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.25);
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 86%;
+  
+  &:hover {
+    text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.25);
+  }
+}
+
+.nav-pills {
+  margin-left: 3px;
+}
+.nav-pills > li > a {
+  text-transform: uppercase;
+  font-weight: bold;
+  color: @grayDarker;
+  .border-radius(0);
+  padding-left: 11px;
+  padding-right: 11px;
+  
+  &:hover, &:focus {
+    background: transparent !important;
+    text-shadow: none !important;
+    border-bottom: 1px solid @grayDarker;
+  }
+}
+.nav-pills > .active > a, .nav-pills > .active > a:hover, .nav-pills > .active > a:focus {
+  background-color: transparent !important;
+  color: @orange;
+  border-bottom: 1px solid @orange;
+  text-shadow: none !important;
+}
+
+.header {
+  text-align: center;
+  padding-top: 8px;
+  height: 156px;
+  
+  .header-strapline {
+    margin: 37px auto 0 auto;
+
+    p {
+      font-style: italic;
+      margin-bottom: 0px;
+      font-size: 110%;
+    }
+  }
+}
+  
+.top-illustration {
+  margin-top: -37px;
+  margin-right: -205px;
+  float: right;
+}
+
+.main-content {
+  border-top: 1px solid #b6b6b6;
+  border-bottom: 1px solid #b6b6b6;
+  background-color: #f5f5f5;
+  padding-bottom: 30px;
+}
+
+.thumbnails {
+  margin-bottom: 0;
+}
+.thumbnails > li {
+  margin-bottom: @gridGutterWidth;
+}
+.thumbnail {
+  padding: 0;
+  border: 1px solid #ddd;
+  .border-radius(0);
+  .box-shadow(none);
+}
+
+.well {
+  .box-shadow(none);
+  .border-radius(0);
+  border-bottom: 1px solid #b6b6b6;
+  padding: 9px;
+}
+
+.footer {
+  height: 200px;
+  padding-top: 70px;
+  background: url(../img/bg-bottom-illustration-1.png) no-repeat;
+  background-position: center 50px;
+  
+  .copyright {
+    margin-top: 40px;
+    
+    p {
+      margin-bottom: 0px;
+    }
+  }
+  .strapline {
+    text-transform: uppercase;
+    
+    p {
+      margin-bottom: 0 !important;
+    }
+    
+    p.strapline-top {
+      font-size: 171%;
+    }
+    p.strapline-bottom {
+      color: @orange;
+      font-size: 200%;
+      font-weight: bold;
+    }
+  }
+}

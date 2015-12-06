@@ -1,0 +1,35 @@
+
+<?php \Laravel\Section::start('content'); ?>
+
+<div class="page-header"><h1>Videos Gallery</h1></div>
+
+<script>
+jQuery(function(){
+  jQuery('#camera_wrap_2').camera({
+    height: '35%',
+    portrait: 'true',
+    fx: 'simpleFade',
+    loader: 'bar',
+    pagination: false,
+    thumbnails: true
+  });
+});
+</script>
+
+<div class="camera_wrap camera_pistachio_skin" id="camera_wrap_2">
+  <?php foreach ($images as $image): ?>
+  <div data-thumb="<?php echo HTML::entities( $image->url_thumb ); ?>" data-src="<?php echo HTML::entities( $image->url ); ?>" data-alignment="topLeft" data-portrait="true">
+      <?php if ($image->type == 'video') : ?>
+      <?php echo  $image->code ; ?>
+      <?php endif; ?>
+      <div class="camera_caption fadeFromBottom">
+          <?php echo  $image->description ; ?>
+      </div>
+  </div>
+  <?php endforeach; ?>
+</div>
+
+<div class="clearfix"></div>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('templates.blog')->with(get_defined_vars())->render(); ?>

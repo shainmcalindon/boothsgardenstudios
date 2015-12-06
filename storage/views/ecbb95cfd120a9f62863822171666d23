@@ -1,0 +1,29 @@
+
+<?php \Laravel\Section::start('content'); ?>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-8">
+    <?php echo \Laravel\Section::yield('blog_content'); ?>
+  </div>
+  <div class="col-xs-12 col-sm-4">
+    <div class="panel panel-default">
+      <div class="panel-heading"><h3 class="panel-title">Latest</h3></div>
+      <div class="list-group">
+        <?php foreach ($latest_posts as $latest_post): ?>
+        <a class="list-group-item" href="/case-studies/view/<?php echo HTML::entities( $latest_post->slug ); ?>"><?php echo HTML::entities( $latest_post->title ); ?></a>
+        <?php endforeach; ?>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading"><h3 class="panel-title">Categories</h3></div>
+      <div class="list-group">
+        <?php foreach ($categories as $category): ?>
+        <a class="list-group-item" href="/case-studies/categories/<?php echo HTML::entities( $category->slug ); ?>"><?php echo HTML::entities( $category->title ); ?></a>
+        <?php endforeach; ?>
+      </div>
+    </div>
+  </div>
+</div>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('templates.main')->with(get_defined_vars())->render(); ?>

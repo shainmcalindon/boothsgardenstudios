@@ -1,0 +1,27 @@
+<form method="post" role="form">
+  <fieldset>
+    <div class="form-group">
+      <label class="control-label">Client</label>
+      <input id="client" name="client" placeholder="" class="form-control" type="text" value="<?php echo HTML::entities( Input::old('client', $testimonial->client) ); ?>">
+    </div>
+    <div class="form-group">
+      <label class="control-label">Testimonial</label>
+      <textarea style="width:100%" rows="10" id="testimonial" name="testimonial" class="tinymce"><?php echo HTML::entities( $testimonial->testimonial ); ?></textarea>
+    </div>
+    <div class="form-group">
+      <div class="checkbox">
+          <label class="checkbox" labelfor="visibility"><input id="visible" name="visible" type="checkbox" value="1" <?php if ($post) { if ($testimonial->visibility == false) { ?><?php } else { ?>checked<?php } } else { ?>checked<?php } ?>>Visible</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <button id="save" name="save" class="btn btn-success" type="submit">Save</button>
+      <?php if(!$testimonial): ?>
+      <a href="/user/testimonials/create/" id="clear" name="clear" class="btn btn-default">Clear</a>
+      <?php endif; ?> 
+      <?php if($testimonial): ?>
+      <a id="cancel" name="cancel" class="btn btn-default" href="/user/testimonials/">Cancel</a>
+      <a id="remove" name="remove" class="btn btn-danger pull-right" href="/user/testimonials/remove/<?php echo HTML::entities( $testimonial->id ); ?>">Remove</a>
+      <?php endif; ?>
+    </div>
+  </fieldset>
+</form>

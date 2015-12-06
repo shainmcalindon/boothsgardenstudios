@@ -1,0 +1,40 @@
+
+<?php \Laravel\Section::start('user_content'); ?>
+
+<div class="btn-group pull-right">
+  <a class="btn btn-default" href="/user/galleries/">Back to galleries</a>
+  <a class="btn btn-default" href="/user/galleries/update/<?php echo HTML::entities( $gallery->id ); ?>">Edit gallery</a>
+  <a class="btn btn-default" href="/user/galleries/addimage/<?php echo HTML::entities( $gallery->id ); ?>">Add image</a>
+  <a class="btn btn-default" href="/user/galleries/addvideo/<?php echo HTML::entities( $gallery->id ); ?>">Add video</a>
+</div>
+
+<div class="page-header"><h1>Gallery: <small><?php echo HTML::entities( $gallery->title ); ?></small></h1></div>
+
+<form method="post" role="form">
+<table class="table">
+  <thead>
+    <tr>
+      <th width="60"></th>
+      <th>Title</th>
+      <th>Type</th>
+      <th>Sort Order</th>
+      <th>Visible</th>
+    </tr>
+  </thead>
+<?php foreach ($images as $image): ?>
+  <tr>
+    <td><a href="/user/galleries/<?php if ($image->type == 'video') : ?>editvideo<?php else : ?>editimage<?php endif; ?>/<?php echo  $image->id ; ?>"><img src="<?php echo HTML::entities( $image->url_thumb ); ?>" alt="<?php echo HTML::entities( $image->alt ); ?>" title="<?php echo HTML::entities( $image->title ); ?>" class="img-thumbnail thumbnail-gallery"></a></td>
+    <td><a href="/user/galleries/<?php if ($image->type == 'video') : ?>editvideo<?php else : ?>editimage<?php endif; ?>/<?php echo  $image->id ; ?>"><?php echo HTML::entities( $image->title ); ?></a></td>
+    <td><?php echo HTML::entities( $image->type ); ?></td>
+    <td><input name="sort_order[<?php echo HTML::entities( $image->id ); ?>]" id="sort_order[<?php echo HTML::entities( $image->id ); ?>]" class="form-control" value="<?php echo HTML::entities( $image->sort_order ); ?>"></td>
+    <td><?php if ($image->visibility == true) { ?><i class="glyphicon glyphicon-ok"></i><?php } else { ?><i class="glyphicon glyphicon-remove"></i><?php } ?></td>
+  </tr>
+<?php endforeach; ?>
+</table>
+<div class="form-group">
+  <button type="submit" class="btn btn-info">Update Sort Order</button>
+</div>
+</form>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('templates.user')->with(get_defined_vars())->render(); ?>

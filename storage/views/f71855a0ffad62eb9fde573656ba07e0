@@ -1,0 +1,29 @@
+
+<?php \Laravel\Section::start('blog_content'); ?>
+
+<div class="page-header"><h1>Case Studies<?php if ($category) { ?>: <small><?php echo HTML::entities( $category->title ); ?></small><?php } ?></h1></div>
+
+<?php echo  $posts->links() ; ?>
+
+<?php foreach ($posts->results as $post): ?>
+
+<div class="blog-post">
+  <div class="post-header"><h2><?php echo  HTML::link('case-studies/view/'.$post->slug, $post->title) ; ?></h2></div>
+  <!--<div class="post-meta"><small>Posted on <?php echo  date('d-m-Y H:i:s', strtotime($post->created_at)) ; ?>, by <?php echo  $post->author->nickname ; ?></small></div>-->
+  <div class="post-excerpt">
+    <div class="post-feature-image">
+      <a href="case-studies/view/<?php echo HTML::entities( $post->slug ); ?>" title="<?php echo HTML::entities( $post->title ); ?>"><img src="<?php echo HTML::entities( $post->feature_image ); ?>" alt="<?php echo HTML::entities( $post->title ); ?>" title="<?php echo HTML::entities($post->title ); ?>" class="img-thumbnail img-responsive"></a>
+    </div>
+    <p><?php echo  substr(strip_tags($post->body),0, 200).' [..]' ; ?></p>
+  </div>
+  <div class="post-link">
+    <p class="pull-right"><?php echo  HTML::link('case-studies/view/'.$post->slug, 'Read more &rarr;', array('class' => 'btn btn-default')) ; ?></p>
+  </div>
+</div>
+
+<?php endforeach; ?>
+
+<?php echo  $posts->links() ; ?>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('templates.blog')->with(get_defined_vars())->render(); ?>

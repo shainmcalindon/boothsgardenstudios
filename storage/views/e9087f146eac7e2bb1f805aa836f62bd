@@ -1,0 +1,13 @@
+
+<?php \Laravel\Section::start('user_content'); ?> 
+
+<div class="pull-right"><a class="btn btn-default" href="/user/categories/">Back to categories</a></div>
+
+<div class="page-header"><h1>Update Category</h1></div>
+
+<?php echo view('widgets.errors')->with(get_defined_vars())->render(); ?>
+
+<?php echo view('user.categories._form')->with(get_defined_vars())->render(); ?>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('templates.user')->with(get_defined_vars())->render(); ?>

@@ -1,0 +1,15 @@
+
+<?php \Laravel\Section::start('user_content'); ?> 
+
+<div class="page-header"><h1>Remove FAQ</h1></div>
+<p><em><?php echo HTML::entities( $faq->question ); ?></em></p>
+<p>Are you sure you wish to remove this FAQ?</p>
+<form method="post" action="">
+<p>
+    <button type="submit" class="btn btn-danger">Yes</button>
+    <a href="/user/faqs/update/<?php echo HTML::entities( $faq->id ); ?>" class="btn btn-default">Cancel</a>
+</p>
+</form>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('templates.user')->with(get_defined_vars())->render(); ?>

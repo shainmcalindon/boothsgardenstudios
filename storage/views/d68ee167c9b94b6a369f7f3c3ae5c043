@@ -1,0 +1,33 @@
+
+<?php \Laravel\Section::start('user_content'); ?>
+
+<div class="pull-right">
+  <div class="btn-group">
+    <a class="btn btn-default" href="/user/faqs/create/">Create FAQ</a>
+  </div>
+</div>
+
+<div class="page-header"><h1>FAQ's</h1></div>
+
+<form method="post" role="form">
+<table class="table">
+  <thead>
+    <tr>
+      <th>Question</th>
+      <th>Sort Order</th>
+    </tr>
+  </thead>
+  <?php foreach ($faqs as $faq): ?>
+  <tr>
+    <td><?php echo  HTML::link('user/faqs/update/'.$faq->id, $faq->question) ; ?></td>
+    <td><input name="sort_order[<?php echo HTML::entities( $faq->id ); ?>]" id="sort_order[<?php echo HTML::entities( $faq->id ); ?>]" class="form-control" value="<?php echo HTML::entities( $faq->sort_order ); ?>"></td>
+  </tr>
+  <?php endforeach; ?>
+</table>
+<div class="form-group">
+  <button type="submit" class="btn btn-info">Update Sort Order</button>
+</div>
+</form>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('templates.user')->with(get_defined_vars())->render(); ?>

@@ -1,0 +1,35 @@
+
+<?php \Laravel\Section::start('user_content'); ?>
+
+<div class="pull-right">
+  <div class="btn-group">
+    <a class="btn btn-primary" href="/user/galleries/create/">Create gallery</a>
+  </div>
+</div>
+
+<div class="page-header"><h1>Galleries</h1></div>
+
+<form method="post" role="form">
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Sort Order</th>
+      <th>Visible</th>
+    </tr>
+  </thead>
+  <?php foreach ($galleries as $gallery): ?>
+  <tr>
+    <td><?php echo  HTML::link('user/galleries/view/'.$gallery->id, $gallery->title) ; ?></td>
+    <td><input name="sort_order[<?php echo HTML::entities( $gallery->id ); ?>]" id="sort_order[<?php echo HTML::entities( $gallery->id ); ?>]" class="form-control" value="<?php echo HTML::entities( $gallery->sort_order ); ?>"></td>
+    <td><?php if ($gallery->visibility == true) { ?><i class="glyphicon glyphicon-ok"></i><?php } else { ?><i class="glyphicon glyphicon-remove"></i><?php } ?></td>
+  </tr>
+  <?php endforeach; ?>
+</table>
+<div class="form-group">
+  <button type="submit" class="btn btn-info">Update Sort Order</button>
+</div>
+</form>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('templates.user')->with(get_defined_vars())->render(); ?>

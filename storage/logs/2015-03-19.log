@@ -1,0 +1,82 @@
+2015-03-19 11:00:11 ERROR - exception 'Exception' with message 'Plan was not found' in /home/boothsga/public_html/application/controllers/quotations.php:140
+Stack trace:
+#0 [internal function]: Quotations_Controller->get_edit('1')
+#1 /home/boothsga/public_html/laravel/routing/controller.php(325): call_user_func_array(Array, Array)
+#2 /home/boothsga/public_html/laravel/routing/controller.php(285): Laravel\Routing\Controller->response('edit', Array)
+#3 /home/boothsga/public_html/laravel/routing/controller.php(165): Laravel\Routing\Controller->execute('edit', Array)
+#4 /home/boothsga/public_html/laravel/routing/route.php(153): Laravel\Routing\Controller::call('quotations@(:1)', Array)
+#5 /home/boothsga/public_html/laravel/routing/route.php(124): Laravel\Routing\Route->response()
+#6 /home/boothsga/public_html/laravel/laravel.php(167): Laravel\Routing\Route->call()
+#7 /home/boothsga/public_html/public/index.php(34): require('/home/boothsga/...')
+#8 {main}
+2015-03-19 11:00:42 ERROR - exception 'Laravel\Database\Exception' with message 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'email_address' in 'field list'
+
+SQL: INSERT INTO `plans` (`dimensions`, `columns`, `rows`, `email_address`, `postcode`, `updated_at`, `created_at`) VALUES (?, ?, ?, ?, ?, ?, ?)
+
+Bindings: array (
+  0 => '7280x2730',
+  1 => 8,
+  2 => 3,
+  3 => 'andrew@onemanlan.com',
+  4 => 'NN160SG',
+  5 => '2015-03-19 11:00:42',
+  6 => '2015-03-19 11:00:42',
+)' in /home/boothsga/public_html/laravel/database/connection.php:263
+Stack trace:
+#0 /home/boothsga/public_html/laravel/database/connection.php(183): Laravel\Database\Connection->execute('INSERT INTO `pl...', Array)
+#1 /home/boothsga/public_html/laravel/database/query.php(823): Laravel\Database\Connection->query('INSERT INTO `pl...', Array)
+#2 [internal function]: Laravel\Database\Query->insert_get_id(Array, 'id')
+#3 /home/boothsga/public_html/laravel/database/eloquent/query.php(283): call_user_func_array(Array, Array)
+#4 /home/boothsga/public_html/laravel/database/eloquent/model.php(390): Laravel\Database\Eloquent\Query->__call('insert_get_id', Array)
+#5 /home/boothsga/public_html/laravel/database/eloquent/model.php(390): Laravel\Database\Eloquent\Query->insert_get_id(Array, 'id')
+#6 /home/boothsga/public_html/application/controllers/quotations.php(108): Laravel\Database\Eloquent\Model->save()
+#7 [internal function]: Quotations_Controller->post_create()
+#8 /home/boothsga/public_html/laravel/routing/controller.php(325): call_user_func_array(Array, Array)
+#9 /home/boothsga/public_html/laravel/routing/controller.php(285): Laravel\Routing\Controller->response('create', Array)
+#10 /home/boothsga/public_html/laravel/routing/controller.php(165): Laravel\Routing\Controller->execute('create', Array)
+#11 /home/boothsga/public_html/laravel/routing/route.php(153): Laravel\Routing\Controller::call('quotations@(:1)', Array)
+#12 /home/boothsga/public_html/laravel/routing/route.php(124): Laravel\Routing\Route->response()
+#13 /home/boothsga/public_html/laravel/laravel.php(167): Laravel\Routing\Route->call()
+#14 /home/boothsga/public_html/public/index.php(34): require('/home/boothsga/...')
+#15 {main}
+2015-03-19 11:00:49 ERROR - exception 'Laravel\Database\Exception' with message 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'email_address' in 'field list'
+
+SQL: INSERT INTO `plans` (`dimensions`, `columns`, `rows`, `email_address`, `postcode`, `updated_at`, `created_at`) VALUES (?, ?, ?, ?, ?, ?, ?)
+
+Bindings: array (
+  0 => '7280x2730',
+  1 => 8,
+  2 => 3,
+  3 => 'andrew@onemanlan.com',
+  4 => 'NN160SG',
+  5 => '2015-03-19 11:00:49',
+  6 => '2015-03-19 11:00:49',
+)' in /home/boothsga/public_html/laravel/database/connection.php:263
+Stack trace:
+#0 /home/boothsga/public_html/laravel/database/connection.php(183): Laravel\Database\Connection->execute('INSERT INTO `pl...', Array)
+#1 /home/boothsga/public_html/laravel/database/query.php(823): Laravel\Database\Connection->query('INSERT INTO `pl...', Array)
+#2 [internal function]: Laravel\Database\Query->insert_get_id(Array, 'id')
+#3 /home/boothsga/public_html/laravel/database/eloquent/query.php(283): call_user_func_array(Array, Array)
+#4 /home/boothsga/public_html/laravel/database/eloquent/model.php(390): Laravel\Database\Eloquent\Query->__call('insert_get_id', Array)
+#5 /home/boothsga/public_html/laravel/database/eloquent/model.php(390): Laravel\Database\Eloquent\Query->insert_get_id(Array, 'id')
+#6 /home/boothsga/public_html/application/controllers/quotations.php(108): Laravel\Database\Eloquent\Model->save()
+#7 [internal function]: Quotations_Controller->post_create()
+#8 /home/boothsga/public_html/laravel/routing/controller.php(325): call_user_func_array(Array, Array)
+#9 /home/boothsga/public_html/laravel/routing/controller.php(285): Laravel\Routing\Controller->response('create', Array)
+#10 /home/boothsga/public_html/laravel/routing/controller.php(165): Laravel\Routing\Controller->execute('create', Array)
+#11 /home/boothsga/public_html/laravel/routing/route.php(153): Laravel\Routing\Controller::call('quotations@(:1)', Array)
+#12 /home/boothsga/public_html/laravel/routing/route.php(124): Laravel\Routing\Route->response()
+#13 /home/boothsga/public_html/laravel/laravel.php(167): Laravel\Routing\Route->call()
+#14 /home/boothsga/public_html/public/index.php(34): require('/home/boothsga/...')
+#15 {main}
+2015-03-19 11:00:56 ERROR - exception 'Exception' with message 'Plan was not found' in /home/boothsga/public_html/application/controllers/quotations.php:140
+Stack trace:
+#0 [internal function]: Quotations_Controller->get_edit('2')
+#1 /home/boothsga/public_html/laravel/routing/controller.php(325): call_user_func_array(Array, Array)
+#2 /home/boothsga/public_html/laravel/routing/controller.php(285): Laravel\Routing\Controller->response('edit', Array)
+#3 /home/boothsga/public_html/laravel/routing/controller.php(165): Laravel\Routing\Controller->execute('edit', Array)
+#4 /home/boothsga/public_html/laravel/routing/route.php(153): Laravel\Routing\Controller::call('quotations@(:1)', Array)
+#5 /home/boothsga/public_html/laravel/routing/route.php(124): Laravel\Routing\Route->response()
+#6 /home/boothsga/public_html/laravel/laravel.php(167): Laravel\Routing\Route->call()
+#7 /home/boothsga/public_html/public/index.php(34): require('/home/boothsga/...')
+#8 {main}

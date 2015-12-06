@@ -1,0 +1,7 @@
+
+<?php \Laravel\Section::start('content'); ?>
+
+<h1>User Home!!!</h1>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('templates.main')->with(get_defined_vars())->render(); ?>

@@ -1,0 +1,22 @@
+
+<?php \Laravel\Section::start('blog_content'); ?>
+
+<div class="page-header"><h1>Case Studies</h1></div>
+
+<?php echo  $posts->links() ; ?>
+
+<?php foreach ($posts->results as $post): ?>
+
+<div class="blog-post">
+    <h2><?php echo  HTML::link('blog/view/'.$post->id, $post->title) ; ?></h2>
+    <small>Posted on <?php echo  date('d-m-Y H:i:s', strtotime($post->created_at)) ; ?>, by <?php echo  $post->author->nickname ; ?></small>
+    <p><?php echo  substr($post->body,0, 150).' [..]' ; ?></p>
+    <p><?php echo  HTML::link('blog/view/'.$post->id, 'Read more &rarr;', array('class' => 'btn')) ; ?></p>
+</div>
+
+<?php endforeach; ?>
+
+<?php echo  $posts->links() ; ?>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('templates.blog')->with(get_defined_vars())->render(); ?>

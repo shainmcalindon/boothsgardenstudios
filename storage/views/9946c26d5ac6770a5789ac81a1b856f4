@@ -1,0 +1,29 @@
+<form method="post" class="form-vertical">
+  <fieldset>
+    <div class="control-group">
+      <label class="control-label">Title</label>
+      <div class="controls">
+        <input id="title" name="title" placeholder="" class="input-block-level" type="text" value="<?php echo HTML::entities( Input::old('title', $category->title) ); ?>">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">Category image</label>
+      <div class="controls">
+        <div class="input-append">
+          <input id="image" name="image" placeholder="" class="input-block-level" type="text" value="<?php echo HTML::entities( Input::old('image', $category->image) ); ?>">
+          <span class="add-on"><i class="icon-search"></i></span>
+        </div>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button id="save" name="save" class="btn btn-primary" type="submit">Save</button>
+      <?php if(!$category): ?>
+      <a href="/user/categories/create/" id="clear" name="clear" class="btn">Clear</a>
+      <?php endif; ?> 
+      <?php if($category): ?>
+      <a id="cancel" name="cancel" class="btn" href="/user/categories/">Cancel</a>
+      <a id="remove" name="remove" class="btn btn-danger pull-right" href="/user/categories/remove/<?php echo HTML::entities( $category->id ); ?>">Remove</a>
+      <?php endif; ?>
+    </div>
+  </fieldset>
+</form>

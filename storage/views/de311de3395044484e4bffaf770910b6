@@ -1,0 +1,15 @@
+<?php if($errors->has()): ?>
+
+<div class="alert alert-danger">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <h4>We encountered the following errors:</h4><br>
+  <ul>
+    <?php foreach($errors->all() as $message): ?>
+
+    <li><?php echo  $message ; ?></li>
+
+    <?php endforeach; ?>
+  </ul>
+</div>
+
+<?php endif; ?>

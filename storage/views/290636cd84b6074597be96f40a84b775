@@ -1,0 +1,34 @@
+
+<?php \Laravel\Section::start('user_content'); ?>
+
+<div class="pull-right">
+  <div class="btn-group">
+    <a class="btn btn-primary" href="/user/testimonials/create/">Create testimaonial</a>
+  </div>
+</div>
+
+<div class="page-header"><h1>Testimonials</h1></div>
+
+<?php echo  $testimonials->links() ; ?>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Client</th>
+      <th>Visible</th>
+      <th>Org</th>
+    </tr>
+  </thead>
+  <?php foreach ($testimonials->results as $testimonial): ?>
+  <tr>
+    <td><?php echo  HTML::link('user/testimonials/update/'.$testimonial->id, $testimonial->client) ; ?></td>
+    <td><?php if ($testimonial->visibility == true) { ?><i class="glyphicon glyphicon-ok"></i><?php } else { ?><i class="glyphicon glyphicon-remove"></i><?php } ?></td>
+    <td><?php if (count($testimonial->organisations) > 1) { ?>Both<?php } else foreach ($testimonial->organisations as $org) { ?><?php echo  $org->short_name ; ?><?php } ?></td>
+  </tr>
+  <?php endforeach; ?>
+</table>
+
+<?php echo  $testimonials->links() ; ?>
+
+<?php \Laravel\Section::stop(); ?>
+<?php echo view('templates.user')->with(get_defined_vars())->render(); ?>
