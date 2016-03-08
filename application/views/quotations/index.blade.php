@@ -1,5 +1,9 @@
 @layout('templates.main')
 
+@section('css')
+  <link rel="stylesheet" href="{{ asset('/css/new_styles.css') }}">
+@endsection
+
 @section('content')
 
 <h1>{{ $data->title }}</h1>
@@ -155,7 +159,6 @@
           <td><input type="radio" name="size" id="10010x4550" value="10010x4550" <?php if(@$_POST['size'] == '10010x4550' ) : ?>checked<?php endif; ?>><label for="10010x4550">{{ $data->layouts['10010x4550']->formatted_cost }}</label></td>
         </tr>                                           
       </table>
-
       <?php /*
         <select class="form-control" id="Size">
         @foreach ($data->layouts as $layout)
@@ -164,5 +167,49 @@
       </select> */ ?>
     </div>
 </div>
+
+<div class="well">
+  <div class="col-md-6">
+    <p>To calculate total studio cost please enter your postcode</p>
+  </div>
+  <div class="clearfix"></div>
+
+  <form action="{{ action('quotations@customise') }}" class="form-inline" id="postcode_form" method="post">
+    <div class="form-group">
+      <input type="text" name="postcode" id="postcode" class="form-control">
+    </div>
+    <button class="btn btn-success square" id="calculateBtn">Calculate</button>
+  </form>
+  
+  <div id="customise-block" hidden>
+    <p>The cost of your new studio will be approximately &pound;15,230 including delivery</p>
+    <p><small>To customise your studio and make additions, please click the button below.</small></p>
+
+    <button class="btn btn-dark" id="customiseBtn">Customise my studio ></button>
+  </div>
+</div>
       
+@endsection
+
+@section('script')
+  <script>
+      $(function(){
+        var $calculate = $('#calculateBtn'),
+            $customise_block = $('#customise-block'),
+            $customise_btn = $('#customiseBtn'),
+            $postcode_form = $('#postcode_form'),
+            $customise_shown = false;
+
+        $calculate.click(function(e) {
+          e.preventDefault();
+
+          if (!$customise_shown) $customise_block.slideToggle();
+            $customise_shown = true;
+        });
+
+        $customise_btn.click(function(e){
+          $postcode_form.submit();
+        });
+      });
+  </script>
 @endsection

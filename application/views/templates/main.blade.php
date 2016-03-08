@@ -208,5 +208,7 @@
     {{ HTML::script('js/scrollspy.js') }}
     {{ HTML::script('js/tab.js') }}
     {{ HTML::script('js/transition.js') }}
+
+    @yield('script')
   </body>
 </html>

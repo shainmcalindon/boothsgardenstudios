@@ -82,7 +82,7 @@ return array(
       'host'     => '127.0.0.1',
       'database' => 'boothsga_boothsgardenstudios',
       'username' => 'root',
-      'password' => '',
+      'password' => 'mysql',
       'charset'  => 'utf8',
       'prefix'   => '',
     ),

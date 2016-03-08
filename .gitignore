@@ -39,3 +39,4 @@ publish
 
 public/js/tinymce/plugins/moxiemanager/data/files/*
 error_log
+application/config/database.php

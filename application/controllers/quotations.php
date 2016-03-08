@@ -229,6 +229,53 @@ class Quotations_Controller extends Base_Controller
 
         return View::make('quotations.submitted')->with('data',$data);
     }
+
+    /** 
+     * customise
+     */
+    public function get_customise()
+    {
+      return 1;
+    }
+
+    // post
+    public function post_customise()
+    {
+      $postcode = Input::get('postcode');
+
+      return View::make('quotations.customise');
+
+    }
+
+    public function post_add_decking()
+    {
+      return View::make('quotations.add_decking');
+    }
+
+    public function post_add_electrics()
+    {
+      return View::make('quotations.add_electrics');
+    }
+
+    public function post_add_interior()
+    {
+      return View::make('quotations.add_interior');
+    }
+
+    public function post_add_other()
+    {
+      return View::make('quotations.add_other');
+    }
+
+    public function post_complete()
+    {
+      return View::make('quotations.complete');
+    }
+
+    public function post_sign_in()
+    {
+      return View::make('quotations.sign_in');
+    }
 }
 
 ?>

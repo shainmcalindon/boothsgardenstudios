@@ -1,0 +1,96 @@
+.btn-dark {
+  background-color: #000;
+  color: #fff;
+  letter-spacing: 1px;
+}
+.btn-dark:hover {
+  color: #ddd;
+}
+.btn-dark.square {
+  border-radius: 0;
+}
+.btn-grey {
+  background-color: #BFBFBF;
+  color: #fff;
+}
+.total-amount {
+  color: #f49033;
+  font-size: 1.6em;
+  font-weight: bold;
+}
+/**
+ * QUOTATION
+ */
+.well #customise-block {
+  margin-top: 30px;
+}
+.quotation-block .breadcrumb li {
+  font-size: .75em;
+  color: #f49033;
+}
+.quotation-block .breadcrumb li.active {
+  color: #909090;
+}
+.quotation-block form .flyout {
+  padding-top: 28px;
+}
+.quotation-block form .flyout .flyout-info {
+  text-decoration: none;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  outline: none;
+}
+.quotation-block form .flyout .flyout-info .label {
+  padding: 3px 8px;
+  border-radius: 25px;
+}
+.quotation-block form .flyout .flyout-info:hover .label {
+  background-color: #23400E;
+}
+.quotation-block form label {
+  font-size: .9em;
+}
+.quotation-block .complete-block {
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
+.quotation-block .complete-block .final-amount {
+  font-size: 2.6em;
+  font-weight: bold;
+  color: #f49033;
+}
+.quotation-block .complete-block form {
+  margin-top: 40px;
+}
+.quotation-block .complete-block form label {
+  margin-top: 30px;
+}
+.quotation-block .complete-block form input {
+  width: 400px;
+}
+.quotation-block .signin-block {
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
+.quotation-block .signin-block .final-amount {
+  font-size: 2.6em;
+  font-weight: bold;
+  color: #f49033;
+}
+.quotation-block .signin-block .sign-in-form-box {
+  margin-top: 40px;
+}
+.quotation-block .signin-block form label {
+  margin-top: 30px;
+}
+.quotation-block .signin-block form input {
+  width: 100%;
+  padding: 10px;
+}
+.quotation-block .signin-block form .form-group {
+  margin-bottom: 4px;
+}
+.quotation-block .signin-block form .form-group:first-child {
+  margin-bottom: 1px;
+}
