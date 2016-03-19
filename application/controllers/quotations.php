@@ -2,29 +2,128 @@
 
 class Quotations_Controller extends Base_Controller 
 {
-  public $restful = true;
+    public $restful = true;
 
-  public function __construct()
-  {
-    if (is_numeric(URI::Segment(3))) {
-      $this->layout_id = URI::Segment(3);
+    public function __construct()
+    {
+        if (is_numeric(URI::Segment(3))) {
+            $this->layout_id = URI::Segment(3);
+        }
     }
-  }
 
-  public function get_index()
-  {        
-      $data = new stdClass();
-      $data->title = 'Price List';
-      $data->layouts = Layouts::get_layouts();
-      $data->errors = array();
-      
-      $galleries = Gallery::order_by('sort_order', 'asc')->get();
+    /*
+     * Step 1 - Initial studio size selection
+     */
+    public function get_index()
+    {
+        $data = new stdClass();
+        $data->title = 'Price List';
+        $data->layouts = Layouts::get_layouts();
+        $data->error = (Session::get('error')) ? Session::get('error') : '';
+        $data->size = (Session::get('size')) ? Session::get('size') : '';
+        $data->postcode = (Session::get('postcode')) ? Session::get('postcode') : '';
+        return View::make('quotations.index')->with('data', $data);
+    }
 
-      return View::make('quotations.index')->with('data',$data)->with('galleries', $galleries);
-  }
+    /*
+     * Step 2 - Loading of first customise page
+     */
+    public function post_customise()
+    {
+        // Get post data
+        $size = Input::get('size');
+        $postcode = Input::get('postcode');
 
-  public function post_index()
-  {        
+        // Make sure data is valid
+        $error = '';
+        if(empty($size) || empty($postcode)){
+            $error = 'Please pick a studio size and provide your post code';
+        }elseif(!Postcodes::ValidOutcode($postcode)){
+            $error = 'Postcode is not valid, please provide a valid UK postcode';
+        }elseif(($layout = Layouts::get_layoutsByCode($size)) === false){
+            $error = 'Unable to find the studio layout you have selected. Please select from the list below';
+        }
+
+        // If we have errors take the user back to the previous step and show the error messages
+        if($error){
+            // We have an error take user back to first step
+            return Redirect::to_action('quotations')->with('error', $error)->with('size', $size)->with('postcode', $postcode);
+        }else{
+            // Calc available space based on studio size
+            $available_slots = Layouts::layoutAvailableWallSlots($layout->id);
+
+            // Load page
+            $data = new stdClass();
+            $data->title = 'Customise Studio';
+            $data->size = $size;
+            $data->postcode = $postcode;
+            $data->layout = $layout;
+            $data->available_slots = $available_slots;
+
+            return View::make('quotations.customise')->with('data', $data);
+        }
+    }
+
+    public function post_add_decking()
+    {
+      return View::make('quotations.add_decking');
+    }
+
+    public function post_add_electrics()
+    {
+      return View::make('quotations.add_electrics');
+    }
+
+    public function post_add_interior()
+    {
+      return View::make('quotations.add_interior');
+    }
+
+    public function post_add_other()
+    {
+      return View::make('quotations.add_other');
+    }
+
+    public function post_complete()
+    {
+      return View::make('quotations.complete');
+    }
+
+    public function post_sign_in()
+    {
+      return View::make('quotations.sign_in');
+    }
+
+
+
+    /*
+     * Non post requests go back to beginning
+     */
+    public function get_customise()
+    {
+        // Take user straight to the quotations starting page
+        return Redirect::to_action('quotations');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
+    public function post_index()
+    {
       $data = new stdClass();
       $data->title = 'Quote Request';
       $data->layouts = Layouts::get_layouts();
@@ -38,7 +137,7 @@ class Quotations_Controller extends Base_Controller
           $rules = array(
               'postcode' => 'required|valid_outcode:true',
               'size' => 'required',
-          );      
+          );
 
           $messages = array(
               'valid_outcode' => 'The postcode was not found in our database',
@@ -55,108 +154,108 @@ class Quotations_Controller extends Base_Controller
           if ($validation->fails())
           {
               $data->errors = $validation->errors->all();
-          } else {     
+          } else {
 
               $postcodes = new Postcodes();
               $distance  = $postcodes->HowFar(trim($input['postcode']));
               $layout    = $data->layouts[$input['size']];
-              
-              /*$travel_allowance = $distance*0.4;
-              $hotel_allowance = $distance*0.4*$layout->men_days;
-              $fuel = $distance*2*0.4*$layout->vans_needed;
-              $transport_cost = $travel_allowance+$hotel_allowance+$fuel; */
-              
+
+              //$travel_allowance = $distance*0.4;
+              //$hotel_allowance = $distance*0.4*$layout->men_days;
+              //$fuel = $distance*2*0.4*$layout->vans_needed;
+              //$transport_cost = $travel_allowance+$hotel_allowance+$fuel;
+
               $transport_base = 300;
               $fuel = $distance*6.50;
               $transport_cost = $transport_base+$fuel;
 
               $data->full_cost = number_format($transport_cost+$layout->cost);
-      
+
               $galleries = Gallery::order_by('sort_order', 'asc')->get();
-              
+
               return View::make('quotations.index')->with('data',$data)->with('galleries', $galleries);
           }
-      } 
-      
+      }
+
       $galleries = Gallery::order_by('sort_order', 'asc')->get();
-      
+
       return View::make('quotations.index')->with('data',$data)->with('galleries', $galleries);
 
-  }
+    }
 
-  public function get_view()
-  {
+    public function get_view()
+    {
     $data['layout'] = Layout::find($this->layout_id);
     $data['formatted_cost'] =  $data['layout'] == '' ? '' : '&pound;'.number_format($data['layout']->cost,2);
     $data['layouts'] = Layout::where('studio_id','=',$data['layout']->studio->id)->order_by('size_x', 'asc')->order_by('size_y', 'asc')->get();
     $galleries = Gallery::order_by('sort_order', 'asc')->get();
-    
+
     return View::make('quotations.view')->with('data', $data)->with('galleries', $galleries);
-  }
-    
-  public function get_create($size=null)
-  {
-	  $data = new stdClass();
-	  $data->title = 'Quote Creation';
-	  $data->layouts = Layouts::get_layouts();
-	  $data->errors = array();
+    }
+
+    public function get_create($size=null)
+    {
+      $data = new stdClass();
+      $data->title = 'Quote Creation';
+      $data->layouts = Layouts::get_layouts();
+      $data->errors = array();
 
           // sss -> list valid sizes programmatically
-	  
-	  return View::make('quotations.create')->with('data',$data);
-  }
 
-      public function post_create()
-      {
-          try {
-              $validation = Validator::make(Input::all(), array(
-                  'email_address' => 'required|email',
-                  'postcode' => 'required', //'required|valid_outcode:true',
-                  'size' => 'required', // sss -> validate size here!
+      return View::make('quotations.create')->with('data',$data);
+    }
+
+    public function post_create()
+    {
+      try {
+          $validation = Validator::make(Input::all(), array(
+              'email_address' => 'required|email',
+              'postcode' => 'required', //'required|valid_outcode:true',
+              'size' => 'required', // sss -> validate size here!
+          ));
+
+          //dd(Input::get('size'));
+
+          if ($validation->passes()) {
+              $plan = new Plan();
+
+              $plan->setSize(Input::get('size'));
+
+              $plan->email_address = Input::get('email_address');
+              $plan->postcode = Input::get('postcode');
+              // sss -> save additional data
+
+              $plan->save();
+
+              return Redirect::to_action('quotations@edit', array(
+                  urlencode(Crypter::encrypt($plan->get_key())),
               ));
-
-              //dd(Input::get('size'));
-
-              if ($validation->passes()) {
-                  $plan = new Plan();
-
-                  $plan->setSize(Input::get('size'));
-
-                  $plan->email_address = Input::get('email_address');
-                  $plan->postcode = Input::get('postcode');
-                  // sss -> save additional data
-
-                  $plan->save();
-
-                  return Redirect::to_action('quotations@edit', array(
-                      urlencode(Crypter::encrypt($plan->get_key())),
-                  ));
-              }
-              else {
-                  return Redirect::to_action('quotations@create')
-                      ->with_errors($validation)
-                      ->with_input();
-              }
           }
-          catch (Exception $e) {
-              Log::error($e);
+          else {
               return Redirect::to_action('quotations@create')
-                  ->with('error', 'Please select a valid plan size') // sss -> how to handle/display these?
+                  ->with_errors($validation)
                   ->with_input();
           }
-
+      }
+      catch (Exception $e) {
+          Log::error($e);
+          return Redirect::to_action('quotations@create')
+              ->with('error', 'Please select a valid plan size') // sss -> how to handle/display these?
+              ->with_input();
       }
 
-  public function get_edit($password=null)
-  {
+    }
+
+    public function get_edit($password=null)
+    {
           $id = Crypter::decrypt(urldecode($password));
 
-	  $data = new stdClass();
-	  $data->title = 'Quote Editor';
-	  $data->layouts = Layouts::get_layouts();
-	  $data->errors = array();
+      $data = new stdClass();
+      $data->title = 'Quote Editor';
+      $data->layouts = Layouts::get_layouts();
+      $data->errors = array();
 
-	  try {
+      try {
               $plan = Plan::find($id);
               if (!$plan) throw new Exception("Plan was not found");
           }
@@ -166,12 +265,12 @@ class Quotations_Controller extends Base_Controller
                   ->with('error', "The plan requested was not found");
           }
 
-	  $data->plan = $plan;
+      $data->plan = $plan;
 
-	  $data->options = Planoption::getGrouped();
+      $data->options = Planoption::getGrouped();
 
-	  return View::make('quotations.edit')->with('data',$data);
-  }
+      return View::make('quotations.edit')->with('data',$data);
+    }
 
     // this should be an ajax request
     public function post_save($id=null)
@@ -229,53 +328,20 @@ class Quotations_Controller extends Base_Controller
 
         return View::make('quotations.submitted')->with('data',$data);
     }
+    */
 
-    /** 
-     * customise
-     */
-    public function get_customise()
-    {
-      return 1;
-    }
 
-    // post
-    public function post_customise()
-    {
-      $postcode = Input::get('postcode');
 
-      return View::make('quotations.customise');
 
-    }
 
-    public function post_add_decking()
-    {
-      return View::make('quotations.add_decking');
-    }
 
-    public function post_add_electrics()
-    {
-      return View::make('quotations.add_electrics');
-    }
 
-    public function post_add_interior()
-    {
-      return View::make('quotations.add_interior');
-    }
 
-    public function post_add_other()
-    {
-      return View::make('quotations.add_other');
-    }
 
-    public function post_complete()
-    {
-      return View::make('quotations.complete');
-    }
 
-    public function post_sign_in()
-    {
-      return View::make('quotations.sign_in');
-    }
+
+
+
+
+
 }
-
-?>

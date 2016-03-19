@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-	<p class="text-right"><small>Your studio Including delivery and Installation</small> <span class="total-amount">&pound;15,830.00</span></p>
+	<p class="text-right"><small>Your studio Including delivery and Installation</small> <span class="total-amount">{{ $data->layout->formatted_cost }}</span></p>
 
 	<div class="quotation-block">
 		<ol class="breadcrumb">
@@ -18,6 +18,13 @@
 		</ol>
 
 		<h4>ADD EXTRA WINDOWS AND DOORS</h4>
+
+
+
+
+
+
+
 
 		<div class="col-md-8">
 			<div class="row">
@@ -158,8 +165,8 @@
 
 @section('script')
 	<script>
-		$(function () {
-		  $('[data-toggle="popover"]').popover({container: 'body'})
-		})
+        jQuery(function($){
+            $('[data-toggle="popover"]').popover({container: 'body'})
+        });
 	</script>
 @endsection

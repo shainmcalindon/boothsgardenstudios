@@ -23,9 +23,9 @@
             return true;
         }
         
-        public function ValidOutcode($postcode)
+        public static function ValidOutcode($postcode)
         {
-            $temp = explode(' ',$postcode);
+            $temp = explode(' ', $postcode);
             if(strlen($temp[0])>4)
             {
                 if(is_numeric(substr($temp[0],4,1)))
