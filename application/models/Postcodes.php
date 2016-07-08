@@ -76,7 +76,7 @@
             }
         }
 
-        public function HowFar($postcode,$units = 'miles')
+        public function HowFar($postcode, $units = 'miles')
         {
                 $their_xy = $this->GetXY($postcode);
                 $our_xy   = $this->GetXY($this->our_postcode);

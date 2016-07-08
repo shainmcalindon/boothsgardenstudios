@@ -58,7 +58,7 @@
         /*
          * Calc available slots based on studio size
          */
-        public static function layoutAvailableWallSlots($id){
+        public static function layoutMaximumWallSlots($id){
             if($layout = Layouts::get_layouts($id)){
                 // Get studio, sizing can diff between certain studios
                 $studio = $layout->studio()->get();
@@ -77,6 +77,30 @@
             return 0;
         }
 
+        /*
+         * Calc available slots based on studio size
+         */
+        public static function layoutWallSlotsBreakdown($id){
+            $data = array();
+
+            if($layout = Layouts::get_layouts($id)){
+                // Get studio, sizing can diff between certain studios
+                $studio = $layout->studio()->get();
+                $studio = $studio[0];
+
+                $data['singleLargeSideSlots'] = round($layout->size_x / $studio->externalwallsingleslotlength);
+                $data['singleSmallSideSlots'] = round($layout->size_y / $studio->externalwallsingleslotlength);
+
+                $data['totalLargeSideSlots'] = $data['singleLargeSideSlots'] * 2;
+                $data['totalSmallSideSlots'] = $data['singleSmallSideSlots'] * 2;
+
+                $data['totalSlots'] = $data['totalLargeSideSlots'] + $data['totalSmallSideSlots'];
+
+                return $data;
+            }
+
+            return 0;
+        }
 
 
 

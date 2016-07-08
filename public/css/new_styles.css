@@ -94,3 +94,12 @@
 .quotation-block .signin-block form .form-group:first-child {
   margin-bottom: 1px;
 }
+#quotationsViewPostcodeField{
+  border: 1px solid rgb(221, 221, 221);
+  border-radius: 6px;
+  font-size: 15px;
+  line-height: 1.33;
+  margin-top: 6px;
+  padding: 10px 16px;
+  width: 242px;
+}

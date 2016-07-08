@@ -13,6 +13,10 @@
     <div id="error_message" class="alert alert-danger" role="alert">{{ $data->error }}</div>
 @endif
 
+@if($data->establishedQuote)
+    <div class="alert alert-danger" role="alert">You have an open quote which is currently in progress, if you choose a different studio, your customisations will be lost.</div>
+@endif
+
 <div class="well" style="margin-top: 20px;">             
   <h3 style="margin-top: 0;">QCB Pricing</h3>
     {{ HTML::image('img/mega-menu-qcb.jpg', '', array('class' => 'img-responsive pull-left', 'style' => 'height: 80px; margin: 0 20px 0 0;', 'title' => 'QCB', 'alt' => 'QCB')) }}
@@ -154,7 +158,7 @@
     </div>
 </div>
 
-<div class="well">
+<div class="well" style="display: none;">
     <div class="col-md-12">
         <div id="postcode_form_info" class="alert alert-info" role="alert" hidden></div>
         <div id="postcode_form_error" class="alert alert-danger" role="alert" hidden></div>
@@ -162,7 +166,7 @@
     </div>
     <div class="clearfix"></div>
 
-    <form action="{{ action('quotations@customise') }}" class="form-inline" id="postcode_form" method="post">
+    <form action="{{ action('quotations@view') }}" class="form-inline" id="postcode_form" method="post">
         <input type="hidden" name="size" value="" />
         <div class="form-group">
             <input type="text" name="postcode" id="postcode" class="form-control" value="{{ $data->postcode  }}">
@@ -242,11 +246,15 @@
                 // Only scroll and focus if the error message is not showing
                 // This allows us to pre select the size and postcode fields but keep the user at the top of the page if error messages are shown
                 if(!$('#error_message').is(':visible')){
-                    // Auto focus the postcode input field
-                    $('#postcode').focus();
+                    if($('#postcode_form').is(':visible')){
+                        // Auto focus the postcode input field
+                        $('#postcode').focus();
 
-                    // Take user to postcode form
-                    $("html, body").animate({ scrollTop: $('#postcode_form_info').offset().top }, 1000);
+                        // Take user to postcode form
+                        $("html, body").animate({ scrollTop: $('#postcode_form_info').offset().top }, 1000);
+                    }else{
+                        $('#postcode_form').submit();
+                    }
                 }
             });
 
@@ -268,8 +276,10 @@
 
             // Initial page load trigger a click on the initial size selection
             // This is to ensure the submit form and interface are in sync
-            initial_selected_size = $('.postcode-submit input[name="size"]:checked');
-            if(initial_selected_size.length) initial_selected_size.click();
+            if($('#postcode_form').is(':visible')) {
+                initial_selected_size = $('.postcode-submit input[name="size"]:checked');
+                if (initial_selected_size.length) initial_selected_size.click();
+            }
 
             // Hide error message after 4 seconds of being on page
             // This also allows the user to click a size and auto scroll once the message has disappeared

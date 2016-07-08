@@ -243,6 +243,14 @@ Route::post('/support', function() {
     Input::flash();
     return View::make('pages.support')->with('title', $title)->with('testimonials', $testimonials)->with('galleries', $galleries)->with('errors', $v->errors)->with('class', 'danger')->with_input();
 });
+
+
+
+
+
+
+
+
 Route::get('/(:any)', function($page) {
     $page = Page::where('slug', '=', $page)->first();
     $organisation = Organisation::find(1);
@@ -258,6 +266,11 @@ Route::get('/(:any)', function($page) {
 
     return View::make('pages.page')->with('page', $page)->with('title', $title)->with('description', $description)->with('keywords', $keywords)->with('testimonials', $testimonials)->with('galleries', $galleries);
 });
+
+
+
+
+
 
 Route::controller('user.pages');
 Route::controller('user.posts');

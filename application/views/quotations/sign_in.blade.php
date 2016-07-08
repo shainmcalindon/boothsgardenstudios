@@ -16,13 +16,21 @@
 			<li>Complete</li>
 		</ol>
 
+		<!-- Show errors messages -->
+		@if($data['error'])
+			<div id="error_message" class="alert alert-danger" role="alert">{{ $data['error'] }}</div>
+		@endif
+
 		<div class="signin-block">
-			<h4 class="text-center">Congratulations, Your studio has been saved in your account!</h4>
+			@if($data['success'])
+				<h4 class="text-center">{{$data['success']}}</h4>
+			@endif
+
 			<p class="text-center">Sign in to your account to access your quotes.</p>
 
 			<div class="col-md-4 col-md-offset-4">
 				<div class="well sign-in-form-box">
-					<form action="{{ action('quotations_sign_in') }}" method="post">
+					<form action="{{ action('quotations/sign_in') }}" method="post">
 						<div class="form-group">
 							<input type="text" name="email" value="" placeholder="Email">
 						</div>
