@@ -17,7 +17,7 @@ class User_Faqs_Controller extends Base_Controller {
   public function get_index()
   {    
     $faqs = Faq::with('organisations')->order_by('sort_order', 'asc')->get();
-    
+
     return View::make('user.faqs.faqs')->with('faqs', $faqs);
   }
   

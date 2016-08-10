@@ -676,43 +676,23 @@ class Quotations_Controller extends Base_Controller
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+    /*
+     * My Quotes
+     */
     public function get_my_quotes(){
+        // Get customer information
         $customer_id = \Laravel\Session::get('quote_account_id');
         $customer = Customer::find($customer_id);
 
         // Does this customer exist and we are logged in?
         if(is_null($customer)) return Redirect::to_action('quotations/sign_in')->with('success', 'Please login to access this area!');
 
+        // Get quotes assigned to user account
+        $quotes = Quotation::where('customer_id', '=', $customer->id)->order_by('id', 'asc')->get();
 
-
-        dd("list quotes");
-
-
-
+        // Return view
+        return View::make('quotations.my_quotes')->with('quotes', $quotes);
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 

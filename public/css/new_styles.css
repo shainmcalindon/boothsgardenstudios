@@ -103,3 +103,43 @@
   padding: 10px 16px;
   width: 242px;
 }
+#myQuotesTitle{
+  float: left;
+}
+#myQuotesLogout{
+  float: left;
+  margin-left: 16px;
+  margin-top: 6px;
+}
+.clear{
+  clear: both;
+}
+#myQuotesTable{
+  margin-top: -1em;
+  width: 100%;
+}
+#myQuotesTable .header{
+  background: #679b42 none repeat scroll 0 0;
+  color: white;
+  text-align: left;
+}
+#myQuotesTable .header td, #myQuotesTable td{
+  padding: 6px 0 6px 8px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

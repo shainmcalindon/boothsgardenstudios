@@ -40,6 +40,17 @@
             <li><a class="<?php if (URI::Segment(2) == 'quotes') { ?>active<?php } ?>" href="/user/quotes/">Quotes</a></li>
             <li><a class="<?php if (URI::Segment(2) == 'contact') { ?>active<?php } ?>" href="/user/contact/">Contact</a></li>
           <?php endif; ?>
+
+
+            <li><a class="dropdown-toggle <?php if (URI::Segment(2) == 'quotations') { ?>active<?php } ?>" href="#" data-toggle="dropdown">Quotating <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <!-- to do - make dynamic -->
+                    <li><a class="<?php if (URI::Segment(3) == 'pricing') { ?>active<?php } ?>" href="/user/quotations/pricing/">Pricing</a></li>
+                    <li><a class="<?php if (URI::Segment(3) == 'quotes') { ?>active<?php } ?>" href="/user/quotations/view/">View Quotations</a></li>
+                </ul>
+            </li>
+
+
         </ul>
       </div>
     </nav>

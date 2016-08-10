@@ -7,14 +7,16 @@
 @section('content')
 
 	<div class="quotation-block">
-		<ol class="breadcrumb">
-			<li class="active">Windows &amp; doors</li>
-			<li class="active">Decking &amp; flyover</li>
-			<li class="active">Electrics</li>
-			<li class="active">Interior</li>
-			<li class="active">Other</li>
-			<li>Complete</li>
-		</ol>
+		@if($data['success'])
+			<ol class="breadcrumb">
+				<li class="active">Windows &amp; doors</li>
+				<li class="active">Decking &amp; flyover</li>
+				<li class="active">Electrics</li>
+				<li class="active">Interior</li>
+				<li class="active">Other</li>
+				<li>Complete</li>
+			</ol>
+		@endif
 
 		<!-- Show errors messages -->
 		@if($data['error'])

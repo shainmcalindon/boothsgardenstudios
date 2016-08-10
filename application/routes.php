@@ -144,14 +144,27 @@ Route::get('case-studies/categories/(:any)', function($category) {
 
     return View::make('pages.blog.blog')->with('posts', $posts)->with('categories', $categories)->with('category', $category)->with('latest_posts', $latest_posts)->with('galleries', $galleries); 
 });
+
 Route::get('/faqs', function() {
     $organisation = Organisation::find(1);
-    $faqs = $organisation->faqs()->order_by('sort_order', 'asc')->get();
-    
-    $galleries = $organisation->galleries()->order_by('sort_order', 'asc')->get();
 
-    return View::make('pages.faqs')->with('faqs', $faqs)->with('galleries', $galleries);
+    // Get all FAQ data
+    $faqs = $organisation->faqs()->order_by('sort_order', 'asc')->get();
+
+    // Get search term data
+    $search = \Laravel\Input::get('search', '');
+
+    // Load FAQ data
+    if(!empty($search)){
+        $search_faqs = $organisation->faqs()->where(function ($query) use ($search) {
+            $query->where('answer', 'LIKE', '%' . $search . '%')
+                ->or_where('question', 'LIKE', '%' . $search . '%');
+        })->order_by('sort_order', 'asc')->get();
+    }
+
+    return View::make('pages.faqs')->with('faqs', $faqs)->with('search', $search)->with('search_faqs', $search_faqs);
 });
+
 Route::get('/galleries/(:any)', function($gallery) {
     $gallery = Gallery::where('slug', '=', $gallery)->first();
     $organisation = Organisation::find(1);
@@ -271,7 +284,7 @@ Route::get('/(:any)', function($page) {
 
 
 
-
+Route::controller('user.quotations');
 Route::controller('user.pages');
 Route::controller('user.posts');
 Route::controller('user.categories');
@@ -282,6 +295,7 @@ Route::controller('user.testimonials');
 Route::controller('user.pricing');
 Route::controller('user');
 Route::controller('quotations');
+
 
 /*
 |--------------------------------------------------------------------------

@@ -6,7 +6,12 @@ class Quotation extends Eloquent {
 
     public function layout()
     {
-        return $this->has_one('Layout', 'quotation_layouts_id');
+        return $this->belongs_to('Layout', 'quotation_layouts_id');
+    }
+
+    public function user()
+    {
+        return $this->belongs_to('User', 'customer_id');
     }
 
     public static function calcDeliver(){

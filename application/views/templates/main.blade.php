@@ -10,6 +10,7 @@
 
     <!-- Le styles -->
     {{ HTML::style('css/bootstrap.css') }}
+    {{ HTML::style('//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css') }}
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -19,10 +20,11 @@
 	@yield('css')
   
   
-    {{ HTML::script('js/jquery.min.js') }}
+    {{ HTML::script('https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js') }}
     {{ HTML::script('js/jquery.migrate.min.js') }}
     {{ HTML::script('js/jquery.mobile.customized.min.js') }}
     {{ HTML::script('js/jquery.easing.1.3.js') }}
+    {{ HTML::script('//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js') }}
 	
 	@yield('js')
 	
